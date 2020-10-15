@@ -39,3 +39,36 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+group :development, :test do
+  # Call 'byebug' anywhere in the code to stop execution
+  gem 'byebug', platform: :mri
+
+  gem 'better_errors'
+  gem 'binding_of_caller'
+
+  gem 'guard'
+  gem 'guard-bundler', require: false
+  gem 'guard-rspec', require: false
+
+  gem 'rspec-rails', '~> 3.5' # , :github => 'rspec/rspec-rails'
+  gem 'rails-controller-testing'
+
+  # Checks ruby code grammar
+  gem 'rubocop', require: false
+  # With rspec
+  gem 'rubocop-rspec'
+  # With guard
+  gem 'guard-rubocop'
+
+end
+
+group :test do
+  gem 'factory_girl_rails'
+  gem 'faker'
+  gem 'database_cleaner'
+end
+
+group :coverage do
+  gem 'simplecov', :require => false
+end
