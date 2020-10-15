@@ -1,2 +1,16 @@
 class ApplicationController < ActionController::API
+  def catch_404
+    raise ActionController::RoutingError.new(params[:path])
+  end
+
+  rescue_from ActionController::RoutingError do |exception|
+    logger.error "Routing error occurred: #{exception}"
+    render json: { error: "No route matches; check routes",
+                  status: :no_route }
+  end
+
+  rescue_from ActiveRecord::RecordNotFound do
+    render json: { error: "No such record in Database; check params",
+                   status: :not_found }
+  end
 end
