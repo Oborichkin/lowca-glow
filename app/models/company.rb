@@ -5,4 +5,8 @@ class Company < ApplicationRecord
 
     validates :name, :location, presence: true
     validates :name, :location, length: { maximum: 64 }
+
+    def delete_company
+        self.update(deleted: true)
+    end
 end

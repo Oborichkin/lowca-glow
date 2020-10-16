@@ -31,7 +31,20 @@ class Api::V1::JobsController < ApplicationController
     end
   end
 
-  # TODO ADD DELETE
+  def destroy
+    if @job.deleted
+      puts "deleted: "
+      render json: { deleted_job: [],
+                     deleted_already: :not_modified,
+      }
+    else
+      @job.delete_job
+      render json: { deleted_job: @job,
+                      code: 200,
+                      status: :success,
+      }, except: [:created_at, :updated_at]
+    end
+  end
 
   private
 

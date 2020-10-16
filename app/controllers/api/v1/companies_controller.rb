@@ -27,7 +27,20 @@ class Api::V1::CompaniesController < ApplicationController
     end
   end
 
-  # TODO ADD DELETE
+  def destroy
+    if @company.deleted
+      puts "deleted: "
+      render json: { deleted_company: [],
+                     deleted_already: :not_modified,
+      }
+    else
+      @company.delete_company
+      render json: { deleted_company: @company,
+                      code: 200,
+                      status: :success,
+      }, except: [:created_at, :updated_at]
+    end
+  end
 
   private
 

@@ -34,7 +34,20 @@ class Api::V1::AppliesController < ApplicationController
     end
   end
 
-  # TODO ADD DELETE
+  def destroy
+    if @apply.deleted
+      puts "deleted: "
+      render json: { deleted_apply: [],
+                     deleted_already: :not_modified,
+      }
+    else
+      @apply.delete_apply
+      render json: { deleted_apply: @apply,
+                      code: 200,
+                      status: :success,
+      }, except: [:created_at, :updated_at]
+    end
+  end
 
   private
 

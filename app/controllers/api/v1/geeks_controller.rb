@@ -27,7 +27,20 @@ class Api::V1::GeeksController < ApplicationController
     end
   end
 
-  # TODO ADD DELETE
+  def destroy
+    if @geek.deleted
+      puts "deleted: "
+      render json: { deleted_geek: [],
+                     deleted_already: :not_modified,
+      }
+    else
+      @geek.delete_geek
+      render json: { deleted_geek: @geek,
+                      code: 200,
+                      status: :success,
+      }, except: [:created_at, :updated_at]
+    end
+  end
 
   private
 
