@@ -1,7 +1,6 @@
 class Api::V1::CompaniesController < ApplicationController
   before_action :set_company, only: [:show, :update, :destroy]
 
-  # для выполнения routes с ассоциацией
   def index
     @companies = Company.all
     render json: { companies: @companies }, except: [:id, :created_at, :updated_at]
@@ -11,8 +10,24 @@ class Api::V1::CompaniesController < ApplicationController
     render json: @company
   end
 
-  # TODO: ADD CREATE
-  # TODO: ADD UPDATE
+  def create
+    @company = Company.new(company_params)
+    if @company.save
+      render json: @company.as_json, status: :created
+    else
+      render json: { user: @company.errors, status: :no_content }
+    end
+  end
+
+  def update
+    if @company.update(company_params)
+      render json: @company
+    else
+      render json: @company.errors, status: :unprocessable_entity
+    end
+  end
+
+  # TODO ADD DELETE
 
   private
 

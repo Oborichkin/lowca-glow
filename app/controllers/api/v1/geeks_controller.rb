@@ -1,7 +1,6 @@
 class Api::V1::GeeksController < ApplicationController
   before_action :set_geek, only: [:show, :update, :destroy]
 
-  # для выполнения routes с ассоциацией
   def index
     @geeks = Geek.all
     render json: { geeks: @geeks }, except: [:id, :created_at, :updated_at]
@@ -11,8 +10,24 @@ class Api::V1::GeeksController < ApplicationController
     render json: @geek
   end
 
-  # TODO: ADD CREATE
-  # TODO: ADD UPDATE
+  def create
+    @geek = Geek.new(geek_params)
+    if @geek.save
+      render json: @geek.as_json, status: :created
+    else
+      render json: { user: @geek.errors, status: :no_content }
+    end
+  end
+
+  def update
+    if @geek.update(geek_params)
+      render json: @geek
+    else
+      render json: @geek.errors, status: :unprocessable_entity
+    end
+  end
+
+  # TODO ADD DELETE
 
   private
 

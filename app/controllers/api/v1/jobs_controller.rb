@@ -1,7 +1,6 @@
 class Api::V1::JobsController < ApplicationController
   before_action :set_job, only: [:show, :update, :destroy]
 
-  # для выполнения routes с ассоциацией
   def index
     if params[:company_id]
       @jobs = Company.find(params[:company_id]).jobs
@@ -31,6 +30,8 @@ class Api::V1::JobsController < ApplicationController
       render json: @job.errors, status: :unprocessable_entity
     end
   end
+
+  # TODO ADD DELETE
 
   private
 
