@@ -1,3 +1,3 @@
-class JobSerializer < ActiveModel::Serializer
+class CompanySerializer < ActiveModel::Serializer
   attributes :name, :location
 end
