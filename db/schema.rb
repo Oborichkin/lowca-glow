@@ -10,10 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_16_184341) do
+ActiveRecord::Schema.define(version: 2020_12_06_193624) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "appartments", force: :cascade do |t|
+    t.string "room_type"
+    t.string "description"
+    t.bigint "resort_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["resort_id"], name: "index_appartments_on_resort_id"
+  end
 
   create_table "applies", force: :cascade do |t|
     t.integer "job_id"
@@ -51,4 +60,13 @@ ActiveRecord::Schema.define(version: 2020_10_16_184341) do
     t.boolean "deleted", default: false
   end
 
+  create_table "resorts", force: :cascade do |t|
+    t.string "name"
+    t.string "email"
+    t.string "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  add_foreign_key "appartments", "resorts"
 end
