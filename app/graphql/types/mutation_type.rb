@@ -1,10 +1,13 @@
 module Types
   class MutationType < Types::BaseObject
-    # TODO: remove me
-    field :test_field, String, null: false,
-      description: "An example field added by the generator"
-    def test_field
-      "Hello World"
+    field :create_resort, ResortType, null: false do
+      argument :name, String, required: true
+      argument :email, String, required: true
     end
+
+    def create_resort(name:, email:)
+      Resort.create(name: name, email: email)
+    end
+
   end
 end

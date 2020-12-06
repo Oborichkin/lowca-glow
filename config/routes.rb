@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  post "/graphql", to: "graphql#execute"
+
   scope module: "api" do
     namespace :v1 do
       resources :jobs do
@@ -13,12 +13,18 @@ Rails.application.routes.draw do
       end
       resources :applies
     end
-    namespace :v2 do
-      resources :appartments
-      resources :resorts do
-        resources :apartments
-      end
-    end
+  end
+
+  resources :appartments
+  resources :resorts do
+    resources :appartments
+  end
+
+  post '/graphql', to: 'graphql#execute'
+  get '/graphql', to: 'graphql#execute'
+
+  if Rails.env.development?
+    mount GraphiQL::Rails::Engine, at: "/graphiql", graphql_path: "/graphql"
   end
 
   match "*path", to: "application#catch_404", via: :all
